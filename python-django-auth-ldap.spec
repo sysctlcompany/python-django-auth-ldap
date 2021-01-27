@@ -9,7 +9,7 @@
 
 Name:           python-%{srcname}
 Version:        2.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Django LDAP authentication backend
 
 License:        BSD
@@ -58,5 +58,8 @@ BuildRequires:  python3dist(mock)
 %{python3_sitelib}/django_auth_ldap/
 
 %changelog
+* Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.2.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Fri Dec 11 2020 Igor Raits <ignatenkobrain@fedoraproject.org> - 2.2.0-1
 - Initial package
