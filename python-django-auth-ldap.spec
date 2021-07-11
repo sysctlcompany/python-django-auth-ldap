@@ -8,8 +8,8 @@
 %global srcname django-auth-ldap
 
 Name:           python-%{srcname}
-Version:        2.2.0
-Release:        3%{?dist}
+Version:        2.4.0
+Release:        1%{?dist}
 Summary:        Django LDAP authentication backend
 
 License:        BSD
@@ -27,7 +27,7 @@ Summary:        %{summary}
 BuildRequires:  python3-devel
 BuildRequires:  python3dist(setuptools)
 %if %{with check}
-BuildRequires:  python3dist(django) >= 1.1
+BuildRequires:  python3dist(django) >= 2.2
 BuildRequires:  python3dist(python-ldap) >= 3.1
 BuildRequires:  /usr/bin/ldapadd
 BuildRequires:  /usr/sbin/slapd
@@ -58,6 +58,9 @@ BuildRequires:  python3dist(mock)
 %{python3_sitelib}/django_auth_ldap/
 
 %changelog
+* Sun Jul 11 2021 Igor Raits <ignatenkobrain@fedoraproject.org> - 2.4.0-1
+- Update to 2.4.0
+
 * Fri Jun 04 2021 Python Maint <python-maint@redhat.com> - 2.2.0-3
 - Rebuilt for Python 3.10
 
