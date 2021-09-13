@@ -16,6 +16,12 @@ License:        BSD
 URL:            https://pypi.org/project/django-auth-ldap
 Source:         %{pypi_source}
 
+# In the tests, only catch and assert warnings produced by django_auth_ldap
+# Needed for compatibility with Python 3.10+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1962238
+# Not submitted upstream, the recent version 3.x removed the 2 affected tests
+Patch1:         tests_only_catch_our_warnings.patch
+
 BuildArch:      noarch
 
 %description
@@ -38,7 +44,7 @@ BuildRequires:  python3dist(mock)
 %{summary}.
 
 %prep
-%autosetup -n %{srcname}-%{version}
+%autosetup -p1 -n %{srcname}-%{version}
 
 %build
 %py3_build

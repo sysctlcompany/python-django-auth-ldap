@@ -1,0 +1,24 @@
+diff --git a/tests/tests.py b/tests/tests.py
+index 7220f20..aaa583d 100644
+--- a/tests/tests.py
++++ b/tests/tests.py
+@@ -186,7 +186,8 @@ class LDAPTest(TestCase):
+         user_count = User.objects.count()
+ 
+         with warnings.catch_warnings(record=True) as w:
+-            warnings.simplefilter("always")
++            warnings.simplefilter("ignore")
++            warnings.filterwarnings("always", module="django_auth_ldap")
+             user = authenticate(username="alice", password="password")
+ 
+         self.assertIs(user.has_usable_password(), False)
+@@ -1572,7 +1573,8 @@ class LDAPTest(TestCase):
+             CACHE_GROUPS=True,
+         )
+         with warnings.catch_warnings(record=True) as w:
+-            warnings.simplefilter("always")
++            warnings.simplefilter("ignore")
++            warnings.filterwarnings("always", module="django_auth_ldap")
+             user = authenticate(username="alice", password="password")
+         self.assertIsNotNone(user)
+         self.assertEqual(len(w), 1)
