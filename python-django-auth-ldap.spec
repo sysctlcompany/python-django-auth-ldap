@@ -8,62 +8,67 @@
 %global srcname django-auth-ldap
 
 Name:           python-%{srcname}
-Version:        2.4.0
-Release:        3%{?dist}
+Version:        4.1.0
+Release:        1%{?dist}
 Summary:        Django LDAP authentication backend
 
 License:        BSD
 URL:            https://pypi.org/project/django-auth-ldap
 Source:         %{pypi_source}
 
-# In the tests, only catch and assert warnings produced by django_auth_ldap
-# Needed for compatibility with Python 3.10+
-# https://bugzilla.redhat.com/show_bug.cgi?id=1962238
-# Not submitted upstream, the recent version 3.x removed the 2 affected tests
-Patch1:         tests_only_catch_our_warnings.patch
-
 BuildArch:      noarch
 
 %description
 %{summary}.
 
-%package -n python3-%{srcname}
+%package -n python%{python3_pkgversion}-%{srcname}
 Summary:        %{summary}
 %{?python_provide:%python_provide python3-%{srcname}}
-BuildRequires:  python3-devel
-BuildRequires:  python3dist(setuptools)
+BuildRequires:	python%{python3_pkgversion}-devel
+BuildRequires:	pyproject-rpm-macros
+BuildRequires:	%{py3_dist setuptools}
+BuildRequires:	%{py3_dist setuptools-scm}
+BuildRequires:	python%{python3_pkgversion}-setuptools_scm+toml
+BuildRequires:	%{py3_dist pip}
+BuildRequires:	%{py3_dist wheel}
+BuildRequires:	%{py3_dist django} >= 2.2
+BuildRequires:	%{py3_dist python-ldap} >= 3.1
+BuildRequires:	%{py3_dist tox-current-env}
 %if %{with check}
-BuildRequires:  python3dist(django) >= 2.2
-BuildRequires:  python3dist(python-ldap) >= 3.1
 BuildRequires:  /usr/bin/ldapadd
 BuildRequires:  /usr/sbin/slapd
-BuildRequires:  python3dist(mock)
 %endif
 
-%description -n python3-%{srcname}
+%description -n python%{python3_pkgversion}-%{srcname}
 %{summary}.
 
 %prep
 %autosetup -p1 -n %{srcname}-%{version}
 
+%generate_buildrequires
+%pyproject_buildrequires -t
+
 %build
-%py3_build
+%pyproject_wheel
 
 %install
-%py3_install
+%pyproject_install
 
 %if %{with check}
 %check
-%python3 -m django test --settings tests.settings
+%tox
 %endif
 
-%files -n python3-%{srcname}
+%files -n python%{python3_pkgversion}-%{srcname}
 %license LICENSE
 %doc README.rst
-%{python3_sitelib}/django_auth_ldap-*.egg-info/
 %{python3_sitelib}/django_auth_ldap/
+%{python3_sitelib}/django_auth_ldap-%{version}.dist-info/
 
 %changelog
+* Sat Jun 11 2022 Ali Erdinc Koroglu <aekoroglu@fedoraproject.org> - 4.1.0-1
+- Update to 4.1.0 (rhbz #2094373 and #2048088)
+
 * Fri Jan 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
