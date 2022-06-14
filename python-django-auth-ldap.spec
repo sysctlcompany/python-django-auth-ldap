@@ -9,7 +9,7 @@
 
 Name:           python-%{srcname}
 Version:        4.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Django LDAP authentication backend
 
 License:        BSD
@@ -66,6 +66,9 @@ BuildRequires:  /usr/sbin/slapd
 %{python3_sitelib}/django_auth_ldap-%{version}.dist-info/
 
 %changelog
+* Tue Jun 14 2022 Python Maint <python-maint@redhat.com> - 4.1.0-2
+- Rebuilt for Python 3.11
+
 * Sat Jun 11 2022 Ali Erdinc Koroglu <aekoroglu@fedoraproject.org> - 4.1.0-1
 - Update to 4.1.0 (rhbz #2094373 and #2048088)
 
