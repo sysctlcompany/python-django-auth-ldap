@@ -1,0 +1,11 @@
+--- a/tox.ini
++++ b/tox.ini
+@@ -25,6 +25,8 @@
+     django50: Django>=5.0,<5.1
+     django51: Django>=5.1b1,<5.2
+     djangomain: https://github.com/django/django/archive/main.tar.gz
++setenv:
++    TMP=/tmp
+ 
+ [testenv:ruff]
+ deps = ruff

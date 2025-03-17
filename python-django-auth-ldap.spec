@@ -8,13 +8,14 @@
 %global srcname django-auth-ldap
 
 Name:           python-%{srcname}
-Version:        4.1.0
-Release:        8%{?dist}
+Version:        5.1.0
+Release:        1%{?dist}
 Summary:        Django LDAP authentication backend
 
 License:        BSD
 URL:            https://pypi.org/project/django-auth-ldap
 Source:         %{pypi_source}
+Patch0:         tox_set_tmp_env.patch
 
 BuildArch:      noarch
 
