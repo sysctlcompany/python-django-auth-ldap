@@ -36,8 +36,8 @@ BuildRequires:	%{py3_dist django} >= 2.2
 BuildRequires:	%{py3_dist python-ldap} >= 3.1
 BuildRequires:	%{py3_dist tox-current-env}
 %if %{with check}
-BuildRequires:  /usr/bin/ldapadd
-BuildRequires:  /usr/sbin/slapd
+BuildRequires:  openldap-clients
+BuildRequires:  openldap-servers
 %endif
 
 %description -n python%{python3_pkgversion}-%{srcname}

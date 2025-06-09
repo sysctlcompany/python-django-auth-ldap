@@ -1,10 +1,26 @@
 1. for some reason the package is called django_auth_ldap-5.1.0.tar.gz on pypi.org so
    rename  source package name in the .spec so fedpkg can download it:
 
-   $ fedpkg --release f41 srpm
+   $ dnf install -y rpmdevtools
+   $ spectool -g -R --define "_sourcedir $(pwd)" ./*.spec
 
 2. rename it back in the spec file, untar, rename, retar, update checksum on sources
 
   $ fedpkg --release f41 srpm
   $ fedpkg --release f41 mockbuild
 
+Or just copy'n'paste this:
+
+  DJANGO_AUTH_LDAP_VERSION=5.1.0
+  echo "building django-auth-ldap.."
+  cd /k/build/django-auth-ldap
+  sed -i 's|django-auth-ldap|django_auth_ldap|' python-django-auth-ldap.spec
+  spectool -g -R --define "_sourcedir $(pwd)" python-django-auth-ldap.spec
+  tar xzf django_auth_ldap-${DJANGO_AUTH_LDAP_VERSION}.tar.gz
+  mv django_auth_ldap-${DJANGO_AUTH_LDAP_VERSION} django-auth-ldap-${DJANGO_AUTH_LDAP_VERSION}
+  tar czf django-auth-ldap-${DJANGO_AUTH_LDAP_VERSION}.tar.gz django-auth-ldap-${DJANGO_AUTH_LDAP_VERSION}
+  cat sources | sha512sum -c
+  git checkout python-django-auth-ldap.spec
+  fedpkg --release f${FEDORA_RELEASE} srpm
+  usermod -a -G mock $USER || true
+  fedpkg --release f${FEDORA_RELEASE} mockbuild
